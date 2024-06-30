@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model expenses {
+  id               String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date             DateTime          @db.Date
+  amount           Float
+  transaction_type transaction_type?
+  balance          Float
+  description      String
+  created_at       DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?         @db.Timestamp(6)
+}
+
+
+
+enum transaction_type {
+  CREDIT
+  DEBIT
+}
